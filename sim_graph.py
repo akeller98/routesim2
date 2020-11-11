@@ -158,6 +158,7 @@ def main():
     graph1.add_edge(4, 5, 1) 
     graph1.add_edge(5, 6, 2)
     graph1.add_edge(1,4, 2)
+    graph1.remove_edge(1,4)
     graph1.print_graph()
 
 
