@@ -13,23 +13,29 @@ class SimulatorGraph:
         if src in self.adj_list:
             self.adj_list[src][dst] = cost
         else:
+            if src == 0:
+                print("adding edge ({}, {})".format(src, dst))
+                print("adding new src 0")
             self.num_vertices += 1
             self.adj_list[src] = {dst: cost}
         if dst in self.adj_list:
             self.adj_list[dst][src] = cost
         else:
+            if dst == 0:
+                print("adding edge ({}, {})".format(src, dst))
+                print("adding new dst 0")
             self.num_vertices += 1
             self.adj_list[dst] = {src: cost}
 
     def remove_edge(self, src, dst):
-        #print("removing edge ({}, {})".format(src, dst))
+        print("removing edge ({}, {})".format(src, dst))
         if src in self.adj_list:
             if dst in self.adj_list[src]:
                 del self.adj_list[src][dst]
                 del self.adj_list[dst][src]
     
     def remove_node(self, node):
-        #print("removing node {}".format(node))
+        print("removing node {}".format(node))
         self.num_vertices -= 1
         if node in self.adj_list:
             del self.adj_list[node]
@@ -70,7 +76,6 @@ class SimulatorGraph:
                 continue
             min_path[next_node] = node
             
-            #print(self.get_neighbors(next_node))
             for neighbor, latency in self.get_neighbors(next_node).items():
                 if neighbor not in min_path and dist[neighbor] > dist[next_node] + latency:
                     dist[neighbor] = dist[next_node] + latency
@@ -79,50 +84,82 @@ class SimulatorGraph:
 
     def get_best_neighbor(self, src, dest):
         print("About to run dijkstra's on {} to {}".format(src, dest))
+        if src == dest:
+            return src
         shortest_paths = self.dijkstra(dest)
         self.print_graph()
         if src in shortest_paths:
+            if shortest_paths[src] == -1:
+                return src
             return shortest_paths[src]
         else:
             return -1
         
 def main():
-    graph4 = SimulatorGraph(8)
-    graph4.add_edge(0,4,7)
-    graph4.add_edge(4,7,3)
-    graph4.add_edge(7,3,7)
-    graph4.add_edge(7,6,6)
-    graph4.add_edge(6,5,4)
-    graph4.add_edge(5,1,4)
-    graph4.add_edge(5,2,5)
-    graph4.add_edge(2,4,6)
-    graph4.dijkstra(2)
+    # graph4 = SimulatorGraph(8)
+    # graph4.add_edge(0,4,7)
+    # graph4.add_edge(4,7,3)
+    # graph4.add_edge(7,3,7)
+    # graph4.add_edge(7,6,6)
+    # graph4.add_edge(6,5,4)
+    # graph4.add_edge(5,1,4)
+    # graph4.add_edge(5,2,5)
+    # graph4.add_edge(2,4,6)
+    # graph4.dijkstra(2)
 
-    graph = SimulatorGraph(5)
-    graph.add_edge(0,1,10)
-    graph.add_edge(1,2,12)
-    graph.add_edge(2,3,23)
-    graph.add_edge(0,2,122)
-    graph.add_edge(1,3,333)
-    graph.remove_edge(1,2)
-    graph.print_graph()
-    graph.dijkstra(0)
+    # graph = SimulatorGraph(5)
+    # graph.add_edge(0,1,10)
+    # graph.add_edge(1,2,12)
+    # graph.add_edge(2,3,23)
+    # graph.add_edge(0,2,122)
+    # graph.add_edge(1,3,333)
+    # graph.remove_edge(1,2)
+    # graph.print_graph()
+    # graph.dijkstra(0)
 
-    print("\n\n")
+    # print("\n\n")
 
-    graph2 = SimulatorGraph(5)
-    graph2.add_edge(0,1,10)
-    graph2.add_edge(1,2,12)
-    graph2.add_edge(2,3,23)
-    graph2.remove_node(2)
-    graph2.print_graph()
+    # graph2 = SimulatorGraph(5)
+    # graph2.add_edge(0,1,10)
+    # graph2.add_edge(1,2,12)
+    # graph2.add_edge(2,3,23)
+    # graph2.remove_node(2)
+    # graph2.print_graph()
 
-    print("\n\n")
+    # print("\n\n")
 
-    graph3 = SimulatorGraph(0)
-    graph3.add_edge(0,1,3)
-    graph3.print_graph()
-    
+    # graph3 = SimulatorGraph(0)
+    # graph3.add_edge(0,1,3)
+    # graph3.print_graph()
+    # graph1 = SimulatorGraph(0)
+    # graph1.add_edge(1, 2, 2)
+    # graph1.add_edge(1, 3, 5)
+    # graph1.add_edge(1, 4, 1)
+    # graph1.add_edge(2, 3, 3) 
+    # graph1.add_edge(2, 4, 2)
+    # graph1.add_edge(3, 4, 3)
+    # graph1.add_edge(3, 5, 1)
+    # graph1.add_edge(3, 6, 5)
+    # graph1.add_edge(4, 5, 1) 
+    # graph1.add_edge(5, 6, 2)
+    # map1 = graph1.dijkstra(1)
+    # print(map1)
+    # {1: -1, 2: 1, 3: 5, 4: 1, 5: 4, 6: 5}
+
+    graph1 = SimulatorGraph(0)
+    graph1.add_edge(1, 2, 2)
+    graph1.add_edge(1, 3, 5)
+    graph1.add_edge(1, 4, 1)
+    graph1.add_edge(2, 3, 3) 
+    graph1.add_edge(2, 4, 2)
+    graph1.add_edge(3, 4, 3)
+    graph1.add_edge(3, 5, 1)
+    graph1.add_edge(3, 6, 5)
+    graph1.add_edge(4, 5, 1) 
+    graph1.add_edge(5, 6, 2)
+    graph1.add_edge(1,4, 2)
+    graph1.print_graph()
+
+
 if __name__ == '__main__':
-    print("Poo Poo Pee Pee")
     main()
