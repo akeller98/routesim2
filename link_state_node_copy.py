@@ -87,7 +87,12 @@ class Link_State_Node(Node):
                 self.update_lmr(src, dst, msg)
                 return True
             else:
-                print(self.id, msg, self.link_largest_message_recv)
+                if src in self.link_largest_message_recv and dst not in self.link_largest_message_recv[src]:
+                    #print(self.id, msg, self.link_largest_message_recv)
+                    self.update_lmr(src, dst, msg)
+                elif dst in self.link_largest_message_recv and src not in self.link_largest_message_recv[dst]:
+                    #print(self.id, msg, self.link_largest_message_recv)
+                    self.update_lmr(src, dst, msg)
                 return self.link_largest_message_recv[src][dst] 
         # do this if latency is non-negative
         if not self.check_exists(src, dst):
@@ -150,7 +155,8 @@ class Link_State_Node(Node):
 
     # Fill in this function
     def process_incoming_routing_message(self, m):
-        
+        # if self.id == 10:
+        #     print(m)
         message = json.loads(m)
         # figure out which largest messages are relevant to us
         #print(self.id, message)

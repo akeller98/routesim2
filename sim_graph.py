@@ -13,29 +13,29 @@ class SimulatorGraph:
         if src in self.adj_list:
             self.adj_list[src][dst] = cost
         else:
-            if src == 0:
-                print("adding edge ({}, {})".format(src, dst))
-                print("adding new src 0")
+            #if src == 0:
+                #print("adding edge ({}, {})".format(src, dst))
+                #print("adding new src 0")
             self.num_vertices += 1
             self.adj_list[src] = {dst: cost}
         if dst in self.adj_list:
             self.adj_list[dst][src] = cost
         else:
-            if dst == 0:
-                print("adding edge ({}, {})".format(src, dst))
-                print("adding new dst 0")
+            #if dst == 0:
+                #print("adding edge ({}, {})".format(src, dst))
+                #print("adding new dst 0")
             self.num_vertices += 1
             self.adj_list[dst] = {src: cost}
 
     def remove_edge(self, src, dst):
-        print("removing edge ({}, {})".format(src, dst))
+        #print("removing edge ({}, {})".format(src, dst))
         if src in self.adj_list:
             if dst in self.adj_list[src]:
                 del self.adj_list[src][dst]
                 del self.adj_list[dst][src]
     
     def remove_node(self, node):
-        print("removing node {}".format(node))
+        #print("removing node {}".format(node))
         self.num_vertices -= 1
         if node in self.adj_list:
             del self.adj_list[node]
@@ -83,11 +83,11 @@ class SimulatorGraph:
         return prev
 
     def get_best_neighbor(self, src, dest):
-        print("About to run dijkstra's on {} to {}".format(src, dest))
+        #print("About to run dijkstra's on {} to {}".format(src, dest))
         if src == dest:
             return src
         shortest_paths = self.dijkstra(dest)
-        self.print_graph()
+        #self.print_graph()
         if src in shortest_paths:
             if shortest_paths[src] == -1:
                 return src
